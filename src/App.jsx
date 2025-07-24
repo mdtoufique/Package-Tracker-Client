@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Dashboard from "./pages/Dashboard";
 import Courier from "./pages/Courier";
+import AlertDashboard from "./pages/AlertDashboard"; // <-- add this line
 
 export default function App() {
-  const [view, setView] = useState("dashboard"); // or 'courier'
+  const [view, setView] = useState("dashboard"); // 'dashboard' | 'courier' | 'alerts'
 
   return (
     <div>
@@ -14,11 +15,15 @@ export default function App() {
         <button onClick={() => setView("courier")} className="hover:underline">
           Courier Update
         </button>
+        <button onClick={() => setView("alerts")} className="hover:underline">
+          Alert Dashboard
+        </button>
       </nav>
 
       <main className="p-6">
         {view === "dashboard" && <Dashboard />}
         {view === "courier" && <Courier />}
+        {view === "alerts" && <AlertDashboard />}
       </main>
     </div>
   );

@@ -2,7 +2,9 @@ import React from "react";
 import StatusBadge from "./StatusBadge";
 
 function formatTimeAgo(dateString) {
-  const diffMs = Date.now() - new Date(dateString).getTime();
+  // Get current time in BD timezone (UTC+6)
+  const nowBd = Date.now() + 6 * 60 * 60 * 1000;
+  const diffMs = nowBd - new Date(dateString).getTime();
   const diffMins = Math.floor(diffMs / 60000);
   if (diffMins < 1) return "just now";
   if (diffMins === 1) return "1 minute ago";
