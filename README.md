@@ -37,26 +37,28 @@ npm run dev
 App will be available at: http://localhost:5173
 
 ### Project Structure (as of now)
+```plaintext
 aamira-client/
 ├── public/
-│   └── vite.svg
+│ └── vite.svg
 ├── src/
-│   ├── components/
-│   │   ├── PackageList.jsx       # Renders the table of packages
-│   │   ├── StatusBadge.jsx       # Colored status labels
-│   ├── pages/
-│   │   └── Dashboard.jsx         # Main dashboard with data fetching + loading
-│   ├── services/
-│   │   └── api.js                # Mock fetchActivePackages() with dummy data
-│   ├── App.jsx                   # Root component rendering <Dashboard />
-│   ├── main.jsx                  # React entry point
-│   └── index.css                 # Tailwind base layer
-├── .env                          # (Optional) for API configs
-├── index.html                    # Vite HTML template
-├── package.json                  # Project metadata + scripts
-├── tailwind.config.js            # Tailwind config
-├── postcss.config.js             # PostCSS config (required for Tailwind)
-└── vite.config.js                # Vite dev/build config
+│ ├── components/
+│ │ ├── PackageList.jsx # Renders the table of packages
+│ │ ├── StatusBadge.jsx # Colored status labels
+│ ├── pages/
+│ │ └── Dashboard.jsx # Main dashboard with data fetching + loading
+│ ├── services/
+│ │ └── api.js # Mock fetchActivePackages() with dummy data
+│ ├── App.jsx # Root component rendering <Dashboard />
+│ ├── main.jsx # React entry point
+│ └── index.css # Tailwind base layer
+├── .env # (Optional) for API configs
+├── index.html # Vite HTML template
+├── package.json # Project metadata + scripts
+├── tailwind.config.js # Tailwind config
+├── postcss.config.js # PostCSS config (required for Tailwind)
+└── vite.config.js # Vite dev/build config
+```
 
 ## ✅ Features (Current)
 
