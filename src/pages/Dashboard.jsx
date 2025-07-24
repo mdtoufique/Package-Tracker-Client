@@ -7,6 +7,8 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let intervalId;
+
     async function loadPackages() {
       try {
         const data = await fetchActivePackages();
@@ -17,7 +19,11 @@ export default function Dashboard() {
         setLoading(false);
       }
     }
-    loadPackages();
+
+    loadPackages(); // initial fetch
+    intervalId = setInterval(loadPackages, 5000); // poll every 5 seconds
+
+    return () => clearInterval(intervalId); // clean up on unmount
   }, []);
 
   if (loading) {
