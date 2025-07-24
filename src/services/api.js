@@ -30,6 +30,26 @@ const dummyPackages = [
     note: "Stuck at hub",
     eta: null,
   },
+  {
+    package_id: "PKG90009",
+    status: "DELIVERED",
+    lat: 39.7000,
+    lon: -86.2100,
+    event_timestamp: new Date(Date.now() - 47 * 60 * 1000).toISOString(), // 47 mins ago
+    received_at: new Date().toISOString(),
+    note: "Stuck at hub",
+    eta: null,
+  },
+  {
+    package_id: "PKG90019",
+    status: "PICKED_UP",
+    lat: 39.7000,
+    lon: -81.2100,
+    event_timestamp: new Date(Date.now() - 47 * 60 * 1000).toISOString(), // 47 mins ago
+    received_at: new Date().toISOString(),
+    note: "Stuck at hub",
+    eta: null,
+  },
 ];
 
 // Mock fetch function returning Promise resolving to dummy data
