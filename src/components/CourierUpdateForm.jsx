@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
+const API_TOKEN = import.meta.env.VITE_API_TOKEN;
 
 const statuses = [
   "CREATED",
@@ -77,7 +78,8 @@ export default function CourierUpdateForm() {
     try {
 		const res = await fetch("http://localhost:5000/api/packages/update", {
 			method: "POST",
-			headers: { "Content-Type": "application/json" },
+			headers: { "Content-Type": "application/json" ,
+			"x-api-token": API_TOKEN,},
 			body: JSON.stringify(payload),
 		});
 
