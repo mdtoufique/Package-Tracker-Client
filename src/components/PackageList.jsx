@@ -69,9 +69,15 @@ export default function PackageList({ packages }) {
 				<tbody>
 					{packages.map((pkg, idx) => (
 						<tr
-							key={pkg.package_id}
-							className={`hover:bg-blue-50 ${idx % 2 === 0 ? "bg-white" : "bg-gray-50"}`}
-						>
+            key={pkg.package_id}
+            className={`hover:bg-blue-200 ${
+              pkg.status === "STUCK"
+                ? "bg-red-100 text-red-800 font-semibold"
+                : idx % 2 === 0
+                ? "bg-white"
+                : "bg-gray-100"
+            }`}
+            >
 							<td className="py-2 px-3 font-mono">{pkg.package_id}</td>
 							<td className="py-2 px-3">
 								<StatusBadge status={pkg.status} />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
-const API_TOKEN = import.meta.env.VITE_API_TOKEN;
+import { updatePackage } from "../services/api";
 
 const statuses = [
   "CREATED",
@@ -23,18 +23,16 @@ export default function CourierUpdateForm() {
   });
 
   const [timestamp, setTimestamp] = useState(
-		new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString().slice(0, 16)
+    new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString().slice(0, 16)
   );
 
   useEffect(() => {
-		const interval = setInterval(() => {
-			setTimestamp(
-				new Date(Date.now() + 6 * 60 * 60 * 1000)
-					.toISOString()
-					.slice(0, 16)
-			);
-		}, 1000);
-		return () => clearInterval(interval);
+    const interval = setInterval(() => {
+      setTimestamp(
+        new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString().slice(0, 16)
+      );
+    }, 1000);
+    return () => clearInterval(interval);
   }, []);
 
   function handleChange(e) {
@@ -76,41 +74,31 @@ export default function CourierUpdateForm() {
     };
 
     try {
-		const res = await fetch("http://localhost:5000/api/packages/update", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" ,
-			"x-api-token": API_TOKEN,},
-			body: JSON.stringify(payload),
-		});
-
-		if (!res.ok) {
-			const errorData = await res.json(); // 👈 get actual error message
-			throw new Error(errorData.message || `Error: ${res.status}`);
-		}
-
-		toast.success("✅ Package update submitted!");
-		setForm({
-			package_id: "",
-			status: "CREATED",
-			lat: "",
-			lon: "",
-			note: "",
-			eta: "",
-		});
-	} catch (error) {
-		toast.error("❌ Failed to submit: " + error.message);
-	}
-
+      await updatePackage(payload);
+      toast.success("✅ Package update submitted!");
+      setForm({
+        package_id: "",
+        status: "CREATED",
+        lat: "",
+        lon: "",
+        note: "",
+        eta: "",
+      });
+    } catch (error) {
+      toast.error("❌ Failed to submit: " + error.message);
+    }
   }
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-lg mx-auto p-4 bg-white shadow rounded space-y-4"
+      className="max-w-md mx-auto space-y-6 px-6 py-8 bg-white rounded-lg shadow-lg"
     >
       <Toaster position="top-center" />
 
-      <h2 className="text-xl font-bold mb-2">Courier Package Update</h2>
+      <h1 className="text-3xl text-center font-bold text-blue-700 mb-4">
+        Update Package Status
+      </h1>
 
       <label className="block">
         Package ID <span className="text-red-600">*</span>
@@ -120,7 +108,8 @@ export default function CourierUpdateForm() {
           name="package_id"
           value={form.package_id}
           onChange={handleChange}
-          className="w-full mt-1 border rounded px-2 py-1"
+          placeholder="Enter Package ID"
+          className="w-full mt-2 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </label>
 
@@ -130,7 +119,7 @@ export default function CourierUpdateForm() {
           name="status"
           value={form.status}
           onChange={handleChange}
-          className="w-full mt-1 border rounded px-2 py-1"
+          className="w-full mt-2 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           {statuses.map((s) => (
             <option key={s} value={s}>
@@ -140,7 +129,7 @@ export default function CourierUpdateForm() {
         </select>
       </label>
 
-      <div className="flex space-x-2 items-center">
+      <div className="flex gap-4 items-end">
         <div className="flex-1">
           <label className="block">
             Latitude
@@ -150,11 +139,12 @@ export default function CourierUpdateForm() {
               name="lat"
               value={form.lat}
               onChange={handleChange}
-              className="w-full mt-1 border rounded px-2 py-1"
               placeholder="Optional"
+              className="w-full mt-2 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </label>
         </div>
+
         <div className="flex-1">
           <label className="block">
             Longitude
@@ -164,15 +154,16 @@ export default function CourierUpdateForm() {
               name="lon"
               value={form.lon}
               onChange={handleChange}
-              className="w-full mt-1 border rounded px-2 py-1"
               placeholder="Optional"
+              className="w-full mt-2 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </label>
         </div>
+
         <button
           type="button"
           onClick={getCurrentLocation}
-          className="mt-6 px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+          className="mb-1 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
           title="Get current location"
         >
           Get Location
@@ -186,7 +177,7 @@ export default function CourierUpdateForm() {
           name="timestamp"
           value={timestamp}
           readOnly
-          className="w-full mt-1 border rounded px-2 py-1 bg-gray-100 cursor-not-allowed"
+          className="w-full mt-2 border border-gray-300 rounded-md px-3 py-2 bg-gray-100 cursor-not-allowed"
         />
       </label>
 
@@ -197,8 +188,8 @@ export default function CourierUpdateForm() {
           value={form.note}
           onChange={handleChange}
           rows={3}
-          className="w-full mt-1 border rounded px-2 py-1"
           placeholder="Optional note"
+          className="w-full mt-2 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </label>
 
@@ -209,14 +200,14 @@ export default function CourierUpdateForm() {
           name="eta"
           value={form.eta}
           onChange={handleChange}
-          className="w-full mt-1 border rounded px-2 py-1"
           placeholder="Optional"
+          className="w-full mt-2 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </label>
 
       <button
         type="submit"
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        className="w-full bg-blue-600 text-white py-3 rounded-md font-semibold hover:bg-blue-700 transition"
       >
         Submit Update
       </button>

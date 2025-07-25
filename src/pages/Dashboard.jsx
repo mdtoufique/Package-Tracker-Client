@@ -3,43 +3,84 @@ import PackageList from "../components/PackageList";
 import { fetchActivePackages } from "../services/api";
 
 export default function Dashboard() {
-  const [packages, setPackages] = useState([]);
-  const [loading, setLoading] = useState(true);
+	const [packages, setPackages] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [search, setSearch] = useState("");
+	const [statusFilter, setStatusFilter] = useState("ALL");
 
-  useEffect(() => {
-    let intervalId;
+	useEffect(() => {
+		let intervalId;
 
-    async function loadPackages() {
-      try {
-        const data = await fetchActivePackages();
-        setPackages(data);
-      } catch (err) {
-        console.error("Failed to fetch packages:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
+		async function loadPackages() {
+			try {
+				const data = await fetchActivePackages();
+				setPackages(data);
+			} catch (err) {
+				console.error("Failed to fetch packages:", err);
+			} finally {
+				setLoading(false);
+			}
+		}
 
-    loadPackages(); // initial fetch
-    intervalId = setInterval(loadPackages, 5000); // poll every 5 seconds
+		loadPackages();
+		intervalId = setInterval(loadPackages, 5000);
+		return () => clearInterval(intervalId);
+	}, []);
 
-    return () => clearInterval(intervalId);
-  }, []);
+	const filteredPackages = packages.filter((pkg) => {
+		const matchSearch = pkg.package_id
+			.toLowerCase()
+			.includes(search.toLowerCase());
+		const matchStatus =
+			statusFilter === "ALL" || pkg.status === statusFilter;
+		return matchSearch && matchStatus;
+	});
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen text-gray-500">
-        Loading packages...
-      </div>
-    );
-  }
+	if (loading) {
+		return (
+			<div className="flex justify-center items-center h-screen text-gray-500">
+				Loading packages...
+			</div>
+		);
+	}
 
-  return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-md p-6 overflow-x-auto">
-        <h1 className="text-4xl font-extrabold text-blue-700 mb-8">Aamira Package Tracker</h1>
-        <PackageList packages={packages} />
-      </div>
-    </div>
-  );
+	return (
+		
+			<div className="max-w-7xl bg-gray-50 mx-auto bg-white rounded-lg shadow-lg p-8 overflow-x-auto">
+				<h1  className="text-3xl text-center font-bold text-blue-700 mb-4">
+        	Aamira Package Tracker
+				</h1>
+
+				<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+					<input
+						type="text"
+						placeholder="Search by Package ID"
+						value={search}
+						onChange={(e) => setSearch(e.target.value)}
+						className="w-full sm:w-72 px-4 py-2 border border-gray-300 rounded-lg shadow-sm
+                       focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+					/>
+
+					<select
+						value={statusFilter}
+						onChange={(e) => setStatusFilter(e.target.value)}
+						className="w-full sm:w-56 px-4 py-2 border border-gray-300 rounded-lg shadow-sm
+                       focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+					>
+						<option value="ALL">All Active</option>
+						<option value="CREATED">CREATED</option>
+						<option value="PICKED_UP">PICKED_UP</option>
+						<option value="IN_TRANSIT">IN_TRANSIT</option>
+						<option value="OUT_FOR_DELIVERY">
+							OUT_FOR_DELIVERY
+						</option>
+						<option value="EXCEPTION">EXCEPTION</option>
+						<option value="STUCK">STUCK</option>
+					</select>
+				</div>
+
+				<PackageList packages={filteredPackages} />
+			</div>
+		
+	);
 }

@@ -30,7 +30,7 @@ export default function PackageHistoryModal({ isOpen, onClose, history, loading,
                 <th className="py-1 px-2 text-left">Timestamp (UTC)</th>
                 <th className="py-1 px-2 text-left">Location</th>
                 <th className="py-1 px-2 text-left">Note</th>
-                <th className="py-1 px-2 text-left">ETA (UTC)</th>
+                <th className="py-1 px-2 text-left">ETA</th>
               </tr>
             </thead>
             <tbody>
