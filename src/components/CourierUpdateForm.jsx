@@ -21,13 +21,19 @@ export default function CourierUpdateForm() {
     eta: "",
   });
 
-  const [timestamp, setTimestamp] = useState(new Date().toISOString().slice(0, 16));
+  const [timestamp, setTimestamp] = useState(
+		new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString().slice(0, 16)
+  );
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTimestamp(new Date().toISOString().slice(0, 16));
-    }, 1000);
-    return () => clearInterval(interval);
+		const interval = setInterval(() => {
+			setTimestamp(
+				new Date(Date.now() + 6 * 60 * 60 * 1000)
+					.toISOString()
+					.slice(0, 16)
+			);
+		}, 1000);
+		return () => clearInterval(interval);
   }, []);
 
   function handleChange(e) {
@@ -69,26 +75,30 @@ export default function CourierUpdateForm() {
     };
 
     try {
-      const res = await fetch("http://localhost:5000/api/packages/update", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+		const res = await fetch("http://localhost:5000/api/packages/update", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(payload),
+		});
 
-      if (!res.ok) throw new Error(`Error: ${res.status}`);
+		if (!res.ok) {
+			const errorData = await res.json(); // 👈 get actual error message
+			throw new Error(errorData.message || `Error: ${res.status}`);
+		}
 
-      toast.success("✅ Package update submitted!");
-      setForm({
-        package_id: "",
-        status: "CREATED",
-        lat: "",
-        lon: "",
-        note: "",
-        eta: "",
-      });
-    } catch (error) {
-      toast.error("❌ Failed to submit: " + error.message);
-    }
+		toast.success("✅ Package update submitted!");
+		setForm({
+			package_id: "",
+			status: "CREATED",
+			lat: "",
+			lon: "",
+			note: "",
+			eta: "",
+		});
+	} catch (error) {
+		toast.error("❌ Failed to submit: " + error.message);
+	}
+
   }
 
   return (

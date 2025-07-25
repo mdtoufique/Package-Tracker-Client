@@ -23,7 +23,7 @@ export default function Dashboard() {
     loadPackages(); // initial fetch
     intervalId = setInterval(loadPackages, 5000); // poll every 5 seconds
 
-    return () => clearInterval(intervalId); // clean up on unmount
+    return () => clearInterval(intervalId);
   }, []);
 
   if (loading) {
@@ -36,7 +36,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-md p-6">
+      <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-md p-6 overflow-x-auto">
         <h1 className="text-4xl font-extrabold text-blue-700 mb-8">Aamira Package Tracker</h1>
         <PackageList packages={packages} />
       </div>
