@@ -70,7 +70,7 @@ export default function CourierUpdateForm() {
       lon: form.lon ? parseFloat(form.lon) : undefined,
       timestamp: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString(),
       note: form.note.trim() || undefined,
-      eta: form.eta ? new Date(form.eta).toISOString() : undefined,
+      eta: form.eta ? new Date(new Date(form.eta).getTime() + 6 * 60 * 60 * 1000).toISOString() : undefined,
     };
 
     try {
