@@ -91,7 +91,7 @@ export default function PackageList({ packages }) {
 							<td className="py-2 px-3">{pkg.note || "—"}</td>
               <td className="py-2 px-3">
 								{pkg.event_timestamp
-									? new Date(pkg.received_at).toLocaleTimeString("en-US", {
+									? new Date(pkg.event_timestamp).toLocaleTimeString("en-US", {
 											hour: "2-digit",
 											minute: "2-digit",
 											second: "2-digit",
