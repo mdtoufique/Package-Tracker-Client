@@ -1,5 +1,5 @@
 import React from "react";
-
+import { XMarkIcon } from "@heroicons/react/24/solid";
 export default function PackageHistoryModal({
 	isOpen,
 	onClose,
@@ -13,11 +13,11 @@ export default function PackageHistoryModal({
 		<div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[5px] bg-white/10">
 			<div className="bg-white/30 backdrop-blur-md border border-white/30 rounded-lg shadow-xl p-6">
 				<button
-					className="absolute top-0 right-1 text-gray-600 hover:text-red-600 text-4xl font-extrabold transition duration-150"
+					className="absolute top-1 right-1 text-gray-600 hover:text-red-600 font-extrabold transition duration-150"
 					onClick={onClose}
 					aria-label="Close modal"
 				>
-					&times;
+					<XMarkIcon className="h-8 w-8" />
 				</button>
 
 				{loading ? (
