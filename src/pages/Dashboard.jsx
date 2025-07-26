@@ -67,7 +67,7 @@ export default function Dashboard() {
 						className="w-full sm:w-56 px-4 py-2 border border-gray-300 rounded-lg shadow-sm
                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
 					>
-						<option value="ALL">All Active</option>
+						<option value="ALL">Active</option>
 						<option value="CREATED">CREATED</option>
 						<option value="PICKED_UP">PICKED_UP</option>
 						<option value="IN_TRANSIT">IN_TRANSIT</option>
