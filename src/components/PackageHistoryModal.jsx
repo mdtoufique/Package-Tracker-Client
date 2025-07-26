@@ -13,7 +13,7 @@ export default function PackageHistoryModal({
 		<div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[5px] bg-white/10">
 			<div className="bg-white/30 backdrop-blur-md border border-white/30 rounded-lg shadow-xl p-6">
 				<button
-					className="absolute top-2 right-2 text-gray-600 hover:text-red-600 text-2xl font-extrabold transition duration-150"
+					className="absolute top-2 right-2 text-gray-600 hover:text-red-600 text-6xl font-extrabold transition duration-150"
 					onClick={onClose}
 					aria-label="Close modal"
 				>
