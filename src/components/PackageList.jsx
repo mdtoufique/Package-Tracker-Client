@@ -61,8 +61,8 @@ export default function PackageList({ packages }) {
 						<th className="py-2 px-3">Last Update</th>
 						<th className="py-2 px-3">Location</th>
 						<th className="py-2 px-3">Note</th>
-						<th className="py-2 px-3">ETA</th>
-						<th className="py-2 px-3">Received At</th>
+						<th className="py-2 px-3">Event Timestamp</th>
+            <th className="py-2 px-3">ETA</th>
 						<th className="py-2 px-3 text-center">Actions</th>
 					</tr>
 				</thead>
@@ -89,6 +89,17 @@ export default function PackageList({ packages }) {
 									: "—"}
 							</td>
 							<td className="py-2 px-3">{pkg.note || "—"}</td>
+              <td className="py-2 px-3">
+								{pkg.event_timestamp
+									? new Date(pkg.received_at).toLocaleTimeString("en-US", {
+											hour: "2-digit",
+											minute: "2-digit",
+											second: "2-digit",
+											hour12: true,
+											timeZone: "UTC",
+									  })
+									: "—"}
+							</td>
 							<td className="py-2 px-3">
 								{pkg.eta
 									? new Date(pkg.eta).toLocaleTimeString("en-US", {
@@ -100,17 +111,7 @@ export default function PackageList({ packages }) {
 									  })
 									: "—"}
 							</td>
-							<td className="py-2 px-3">
-								{pkg.received_at
-									? new Date(pkg.received_at).toLocaleTimeString("en-US", {
-											hour: "2-digit",
-											minute: "2-digit",
-											second: "2-digit",
-											hour12: true,
-											timeZone: "UTC",
-									  })
-									: "—"}
-							</td>
+							
 							<td className="py-2 px-3 text-center">
 								<button
 									className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1 px-3 rounded transition-colors duration-200"
