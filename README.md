@@ -4,6 +4,12 @@ This is the **frontend** for the Aamira Courier Package Tracker challenge, built
 
 ---
 
+## 📌 Additional Documentation
+
+- [🧠 Assumptions & Design Decisions](./ASSUMPTIONS.md)
+
+---
+
 ## 🔧 Tech Stack
 
 - ⚛️ React (with Vite)
