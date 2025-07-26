@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import PackageList from "../components/PackageList";
-import { fetchActivePackages } from "../services/api";
+import { fetchPackages } from "../services/api";
 
 export default function Dashboard() {
 	const [packages, setPackages] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [search, setSearch] = useState("");
-	const [statusFilter, setStatusFilter] = useState("ALL");
+	const [statusFilter, setStatusFilter] = useState("ACTIVE");
 
 	useEffect(() => {
 		let intervalId;
 
 		async function loadPackages() {
 			try {
-				const data = await fetchActivePackages();
+				const data = await fetchPackages();
 				setPackages(data);
 			} catch (err) {
 				console.error("Failed to fetch packages:", err);
@@ -27,14 +27,31 @@ export default function Dashboard() {
 		return () => clearInterval(intervalId);
 	}, []);
 
-	const filteredPackages = packages.filter((pkg) => {
-		const matchSearch = pkg.package_id
-			.toLowerCase()
-			.includes(search.toLowerCase());
-		const matchStatus =
-			statusFilter === "ALL" || pkg.status === statusFilter;
-		return matchSearch && matchStatus;
-	});
+	// const filteredPackages = packages.filter((pkg) => {
+	// 	const matchSearch = pkg.package_id
+	// 		.toLowerCase()
+	// 		.includes(search.toLowerCase());
+	// 	const matchStatus =
+	// 		statusFilter === "ACTIVE" || pkg.status === statusFilter;
+	// 	return matchSearch && matchStatus;
+	// });
+  
+  const filteredPackages = packages.filter((pkg) => {
+	const matchSearch = pkg.package_id
+		.toLowerCase()
+		.includes(search.toLowerCase());
+
+	let matchStatus;
+	if (statusFilter === "ACTIVE") {
+		matchStatus = pkg.status !== "DELIVERED" && pkg.status !== "CANCELLED";
+	} else if (statusFilter === "INACTIVE") {
+		matchStatus = pkg.status === "DELIVERED" || pkg.status === "CANCELLED";
+	} else {
+		matchStatus = pkg.status === statusFilter;
+	}
+
+	return matchSearch && matchStatus;
+});
 
 	if (loading) {
 		return (
@@ -67,7 +84,7 @@ export default function Dashboard() {
 						className="w-full sm:w-56 px-4 py-2 border border-gray-300 rounded-lg shadow-sm
                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
 					>
-						<option value="ALL">Active</option>
+						<option value="ACTIVE">Active</option>
 						<option value="CREATED">CREATED</option>
 						<option value="PICKED_UP">PICKED_UP</option>
 						<option value="IN_TRANSIT">IN_TRANSIT</option>
@@ -76,6 +93,7 @@ export default function Dashboard() {
 						</option>
 						<option value="EXCEPTION">EXCEPTION</option>
 						<option value="STUCK">STUCK</option>
+            <option value="INACTIVE">INACTIVE</option>
 					</select>
 				</div>
 

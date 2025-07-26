@@ -1,9 +1,9 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const API_TOKEN = import.meta.env.VITE_API_TOKEN;
 // fetch currently active packages
-export async function fetchActivePackages() {
+export async function fetchPackages() {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/packages/active`, {
+    const response = await fetch(`${API_BASE_URL}/api/packages/all`, {
 		headers: {
 			"Content-Type": "application/json",
 			"x-api-token": API_TOKEN,
