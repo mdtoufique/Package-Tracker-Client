@@ -85,7 +85,9 @@ export default function CourierUpdateForm() {
         eta: "",
       });
     } catch (error) {
-      toast.error("❌ Failed to submit: " + error.message);
+      toast.error("❌ Failed to submit: " + error.message, {
+			autoClose: 5000, // 5 seconds
+		});
     }
   }
 
