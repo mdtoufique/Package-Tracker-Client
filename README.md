@@ -156,8 +156,8 @@ npm install
 Create a .env file in the root:
 
 ```ini
-VITE_API_BASE_URL=http://localhost:5000
-VITE_API_TOKEN=aamira_2025_TOUFIQUE
+VITE_API_BASE_URL=your_backend_server_url
+VITE_API_TOKEN=your_api_token_here
 ```
 
 ### 4. Run locally
