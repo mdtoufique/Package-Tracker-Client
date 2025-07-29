@@ -41,7 +41,7 @@ export async function fetchPackageHistory(packageId) {
 // fetching alert
 export async function fetchActiveAlerts() {
   try {
-    const res = await fetch(`${API_BASE_URL}/api/alerts?resolved=false`, {
+    const res = await fetch(`${API_BASE_URL}/api/alerts`, {
       headers: {
         "Content-Type": "application/json",
         "x-api-token": API_TOKEN,

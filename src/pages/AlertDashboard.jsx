@@ -59,10 +59,10 @@ export default function AlertDashboard() {
             key={alert._id}
             className="flex flex-col md:flex-row md:justify-between md:items-center border border-red-300 rounded-lg p-4 bg-red-50 hover:bg-red-100 transition"
           >
-            <p className="font-semibold text-red-800 text-lg">{alert.message}</p>
+            <p className="font-semibold text-red-800 text-lg">{alert.note}</p>
             <p className="mt-2 md:mt-0 text-sm text-gray-500 italic whitespace-nowrap">
               Created at:{" "}
-              {new Date(alert.created_at).toLocaleString("en-US", {
+              {new Date(alert.event_timestamp).toLocaleString("en-US", {
                 hour12: true,
                 timeZone: "UTC",
               })}
