@@ -88,7 +88,7 @@ export async function updatePackage(payload) {
 // alert count
 export async function fetchUnresolvedAlertCount() {
   try {
-    const res = await fetch(`${API_BASE_URL}/api/alerts/count?resolved=false`, {
+    const res = await fetch(`${API_BASE_URL}/api/alerts/count`, {
       headers: {
         "Content-Type": "application/json",
         "x-api-token": API_TOKEN,
