@@ -11,7 +11,7 @@ export default function PackageHistoryModal({
 
 	return (
 		<div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[5px] bg-white/10">
-			<div className="bg-white/30 backdrop-blur-md border border-white/30 rounded-lg shadow-xl p-6">
+			<div className=" modal-content bg-white/30 backdrop-blur-md border border-white/30 rounded-lg shadow-xl p-6">
 				<button
 					className="absolute top-1 right-1 text-gray-600 hover:text-red-600 font-extrabold transition duration-150"
 					onClick={onClose}
@@ -36,7 +36,7 @@ export default function PackageHistoryModal({
 										Status
 									</th>
 									<th className="py-1 px-2 text-left">
-										Timestamp (UTC)
+										Timestamp 
 									</th>
 									<th className="py-1 px-2 text-left">
 										Location
@@ -57,10 +57,10 @@ export default function PackageHistoryModal({
 												: "bg-gray-50"
 										}
 									>
-										<td className="py-1 px-2 font-mono">
+										<td data-label="Status"  className="py-1 px-2 font-mono">
 											{event.status}
 										</td>
-										<td className="py-1 px-2">
+										<td data-label="Timestamp"  className="py-1 px-2">
 											{new Date(
 												event.event_timestamp
 											).toLocaleString("en-US", {
@@ -68,17 +68,17 @@ export default function PackageHistoryModal({
 												timeZone: "UTC",
 											})}
 										</td>
-										<td className="py-1 px-2">
+										<td data-label="Location"  className="py-1 px-2">
 											{event.lat && event.lon
 												? `${event.lat.toFixed(
 														4
 												  )}, ${event.lon.toFixed(4)}`
 												: "—"}
 										</td>
-										<td className="py-1 px-2">
+										<td data-label="Note"  className="py-1 px-2">
 											{event.note || "—"}
 										</td>
-										<td className="py-1 px-2">
+										<td data-label="ETA"  className="py-1 px-2">
 											{event.eta
 												? new Date(
 														event.eta

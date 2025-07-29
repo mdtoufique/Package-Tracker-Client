@@ -78,48 +78,46 @@ export default function PackageList({ packages }) {
                 : "bg-gray-100"
             }`}
             >
-							<td className="py-2 px-3 font-mono">{pkg.package_id}</td>
-							<td className="py-2 px-3">
-								<StatusBadge status={pkg.status} />
-							</td>
-							<td className="py-2 px-3">{formatTimeAgo(pkg.event_timestamp)}</td>
-							<td className="py-2 px-3">
-								{pkg.lat && pkg.lon
-									? `${pkg.lat.toFixed(4)}, ${pkg.lon.toFixed(4)}`
-									: "—"}
-							</td>
-							<td className="py-2 px-3">{pkg.note || "—"}</td>
-              <td className="py-2 px-3">
-								{pkg.event_timestamp
-									? new Date(pkg.event_timestamp).toLocaleTimeString("en-US", {
-											hour: "2-digit",
-											minute: "2-digit",
-											second: "2-digit",
-											hour12: true,
-											timeZone: "UTC",
-									  })
-									: "—"}
-							</td>
-							<td className="py-2 px-3">
-								{pkg.eta
-									? new Date(pkg.eta).toLocaleTimeString("en-US", {
-											hour: "2-digit",
-											minute: "2-digit",
-											second: "2-digit",
-											hour12: true,
-											timeZone: "UTC",
-									  })
-									: "—"}
-							</td>
-							
-							<td className="py-2 px-3 text-center">
-								<button
-									className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1 px-3 rounded transition-colors duration-200"
-									onClick={() => showDetails(pkg.package_id)}
-								>
-									Show Details
-								</button>
-							</td>
+							<td data-label="Package ID" className="py-2 px-3 font-mono">{pkg.package_id}</td>
+<td data-label="Status" className="py-2 px-3">
+  <StatusBadge status={pkg.status} />
+</td>
+<td data-label="Last Update" className="py-2 px-3">{formatTimeAgo(pkg.event_timestamp)}</td>
+<td data-label="Location" className="py-2 px-3">
+  {pkg.lat && pkg.lon ? `${pkg.lat.toFixed(4)}, ${pkg.lon.toFixed(4)}` : "—"}
+</td>
+<td data-label="Note" className="py-2 px-3">{pkg.note || "—"}</td>
+<td data-label="Event Timestamp" className="py-2 px-3">
+  {pkg.event_timestamp
+    ? new Date(pkg.event_timestamp).toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+        timeZone: "UTC",
+      })
+    : "—"}
+</td>
+<td data-label="ETA" className="py-2 px-3">
+  {pkg.eta
+    ? new Date(pkg.eta).toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+        timeZone: "UTC",
+      })
+    : "—"}
+</td>
+<td data-label="Actions" className="py-2 px-3 text-center">
+  <button
+    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1 px-3 rounded transition-colors duration-200"
+    onClick={() => showDetails(pkg.package_id)}
+  >
+    Show Details
+  </button>
+</td>
+
 						</tr>
 					))}
 				</tbody>
