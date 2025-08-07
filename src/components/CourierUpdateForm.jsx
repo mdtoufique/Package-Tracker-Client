@@ -63,14 +63,23 @@ export default function CourierUpdateForm() {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    const numericId = form.package_id.trim();
+
+    if (!/^\d+$/.test(numericId)) {
+      toast.error("❌ Package ID must be numeric (e.g., 1234)");
+      return;
+    }
+
     const payload = {
-      package_id: form.package_id.trim(),
+      package_id: "PKG" + numericId,
       status: form.status,
       lat: form.lat ? parseFloat(form.lat) : undefined,
       lon: form.lon ? parseFloat(form.lon) : undefined,
       timestamp: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString(),
       note: form.note.trim() || undefined,
-      eta: form.eta ? new Date(new Date(form.eta).getTime() + 6 * 60 * 60 * 1000).toISOString() : undefined,
+      eta: form.eta
+        ? new Date(new Date(form.eta).getTime() + 6 * 60 * 60 * 1000).toISOString()
+        : undefined,
     };
 
     try {
@@ -85,9 +94,7 @@ export default function CourierUpdateForm() {
         eta: "",
       });
     } catch (error) {
-      toast.error("❌ Failed to submit: " + error.message, {
-			autoClose: 6000, // 5 seconds
-		});
+      toast.error("❌ Failed to submit: " + error.message);
     }
   }
 
@@ -104,15 +111,20 @@ export default function CourierUpdateForm() {
 
       <label className="block">
         Package ID <span className="text-red-600">*</span>
-        <input
-          required
-          type="text"
-          name="package_id"
-          value={form.package_id}
-          onChange={handleChange}
-          placeholder="Enter Package ID"
-          className="w-full mt-2 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        <div className="flex mt-2">
+          <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-100 text-gray-600">
+            PKG
+          </span>
+          <input
+            required
+            type="text"
+            name="package_id"
+            value={form.package_id}
+            onChange={handleChange}
+            placeholder="Enter numeric ID (e.g., 1234)"
+            className="w-full border border-gray-300 rounded-r-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
       </label>
 
       <label className="block">
